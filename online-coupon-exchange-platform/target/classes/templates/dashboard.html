@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <title>Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+			.navbar {
+                background-color: #333; /* Darker background with better contrast */
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Add border-bottom */
+                padding: 10px 20px; /* Add padding */
+            }
+
+            .navbar-brand {
+                color: white !important;
+                font-family: 'Georgia', serif;
+                font-size: 30px;
+                font-weight: bold;
+            }
+
+            .navbar-nav .nav-link {
+                color: white !important; /* Ensure links are white */
+                font-family: 'Arial', sans-serif;
+                font-size: 18px;
+                padding: 10px 15px;
+                margin: 0 10px; /* Add space between links */
+                transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+            }
+
+            .navbar-nav .nav-link:hover {
+                color: #004080 !important; /* Change to dark blue on hover */
+                background-color: #ffffff !important; /* White background on hover */
+                border-radius: 5px; /* Rounded corners */
+            }
+
+            .navbar-toggler-icon {
+                color: white !important; /* Ensure the toggler icon is visible */
+            }
+
+
+
+
+
+        	/* footer styles */
+				footer {
+                    background-color: #004080;
+                    color: white;
+                    text-align: center;
+                    padding: 20px 0;
+                    position: relative;
+                    bottom: 0;
+                    width: 100%;
+                }
+
+                .footer-content {
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+                    flex-wrap: wrap;
+                }
+
+                .footer-section {
+                    width: 45%;
+                    margin-bottom: 20px;
+                }
+
+                .footer-section h4 {
+                    font-size: 20px;
+                    margin-bottom: 15px;
+                }
+
+                .footer-section ul {
+                    list-style: none;
+                    padding: 0;
+                }
+
+             .footer-section ul li {
+              	margin-bottom: 10px;
+             }
+            .footer {
+            	background-color: #333;
+            	color: white;
+            	padding: 20px 0;
+            	text-align: center;
+        	}
+
+        	.footer p {
+            	margin-bottom: 5px;
+        	}
+
+        	.footer h4 {
+            	color: #fff;
+            	font-size: 24px;
+            	margin-bottom: 20px;
+        	}
+
+        	.footer ul {
+            	list-style: none;
+            	padding-left: 0;
+        	}
+
+        	.footer-links {
+            	margin-top: 10px;
+        	}
+
+        	.footer-links a {
+            	color: white;
+            	margin: 0 10px;
+            	font-size: 18px;
+            	text-decoration: none;
+            	transition: color 0.3s;
+        	}
+
+        	.footer-links a:hover {
+            	color: #007bff;
+        	}
+
+
+         /* body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        } */
+
+        .dashboard-container {
+        	font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0 auto;
+            padding: 50px;
+            background: #ffffff;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 0;
+        }
+
+        .dashboard-container h1 {
+            font-size: 50px;
+            margin-bottom: 45px;
+            color: #00bcd4;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(45deg, #00bcd4, #0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .after-dashboard::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: #00bcd4;
+            margin: 15px auto 0;
+            border-radius: 2px;
+            margin-bottom: 40px;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 20px;
+            background: linear-gradient(45deg, #00bcd4, #00bcd4);
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            border: none;
+            border-radius: 10px;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 188, 212, 0.2);
+            width: 200px;
+            text-align: center;
+        }
+
+        .button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 188, 212, 0.4);
+        }
+
+        .used-button {
+            background: linear-gradient(45deg, #4caf50, #388e3c);
+        }
+
+        .used-button:hover {
+            background: linear-gradient(45deg, #66bb6a, #2e7d32);
+            text-decoration:none;
+            color:white;
+        }
+
+        .posted-button {
+            background: linear-gradient(45deg, #ff9800, #f57c00);
+        }
+
+        .posted-button:hover {
+            background: linear-gradient(45deg, #ffa726, #ef6c00);
+            text-decoration:none;
+            color:white;
+        }
+
+        .wishlist-button {
+            background: linear-gradient(45deg, #e91e63, #c2185b);
+        }
+
+        .wishlist-button:hover {
+            background: linear-gradient(45deg, #f06292, #ad1457);
+            text-decoration:none;
+            color:white;
+        }
+
+        .contact-button {
+            background: linear-gradient(45deg, #2196f3, #1976d2);
+        }
+
+        .contact-button:hover {
+            background: linear-gradient(45deg, #64b5f6, #1565c0);
+            text-decoration:none;
+            color:white;
+        }
+
+        .button i {
+            margin-right: 10px;
+        }
+
+        .button:focus, .button:active {
+            outline: none;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background: linear-gradient(45deg, #9c27b0, #7b1fa2);
+            color: #ffffff;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(156, 39, 176, 0.4);
+            text-decoration:none;
+            color:white;
+        }
+    </style>
+</head>
+
+<body>
+<!-- Header Container -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/home}">CouponHub</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/home}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/displayProfile}" sec:authorize="isAuthenticated()">
+                        <i class="bi bi-person-circle"></i> Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/contact}">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/login}" sec:authorize="isAnonymous()">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/register}" sec:authorize="isAnonymous()">Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="dashboard-container">
+    <h1>Dashboard</h1>
+    <div class="after-dashboard"></div>
+    <div class="buttons-container">
+        <a th:href="@{/displayUsedCoupons}" class="button used-button">
+            <i class="fas fa-check-circle"></i> Used Coupons
+        </a>
+        <a th:href="@{/displayWishlistCoupons}" class="button wishlist-button">
+            <i class="fas fa-heart"></i> Wishlisted Coupons
+        </a>
+        <a th:href="@{/displayPostedCoupons}" class="button posted-button">
+            <i class="fas fa-bullhorn"></i> Posted Coupons
+        </a>
+        <a th:href="@{/contact}" class="button contact-button">
+            <i class="fas fa-envelope"></i> Contact
+        </a>
+    </div>
+    <a href="javascript:history.back()" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Company Name</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit.</p>
+            </div>
+            <div class="col-md-4">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a th:href="@{/home}">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#con">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h4>Contact Info</h4>
+                <p><strong>Address:</strong> 123 Street, City, Country</p>
+                <p><strong>Email:</strong> info@example.com</p>
+                <p><strong>Phone:</strong> +123-456-7890</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

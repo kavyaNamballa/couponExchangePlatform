@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="${_csrf.token}">
+    <title>Myntra Coupons</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+
+        .navbar {
+                background-color: #333; /* Darker background with better contrast */
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Add border-bottom */
+                padding: 10px 20px; /* Add padding */
+            }
+
+            .navbar-brand {
+                color: white !important;
+                font-family: 'Georgia', serif;
+                font-size: 30px;
+                font-weight: bold;
+            }
+
+            .navbar-nav .nav-link {
+                color: white !important; /* Ensure links are white */
+                font-family: 'Arial', sans-serif;
+                font-size: 18px;
+                padding: 10px 15px;
+                margin: 0 10px; /* Add space between links */
+                transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+            }
+
+            .navbar-nav .nav-link:hover {
+                color: #004080 !important; /* Change to dark blue on hover */
+                background-color: #ffffff !important; /* White background on hover */
+                border-radius: 5px; /* Rounded corners */
+            }
+
+            .navbar-toggler-icon {
+                color: white !important; /* Ensure the toggler icon is visible */
+            }
+
+
+             /* Styling for the error page container */
+                .coupon-container {
+                    background-color: #f2f2f2;
+                    padding-top: 80px;
+                    padding-bottom: 50px;
+                }
+
+
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #e0e0e0, #ffffff);
+            border-radius: 15px;
+            color: #333;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .header:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            font-family: 'Georgia', serif;
+            color: #444;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            font-family: 'Arial', sans-serif;
+            color: #666;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+        .header::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: #ff3e6c;
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+        .coupon-card {
+            background: #ffffff;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out, border-color 0.3s;
+        }
+        .coupon-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+            border-color: #007bff;
+        }
+        .coupon-card-main {
+            display: flex;
+            align-items: center;
+        }
+        .coupon-card img {
+            max-width: 50px;
+            margin-right: 15px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+        }
+        .coupon-type-text {
+            flex-grow: 1;
+        }
+        .coupon-type {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #17a2b8;
+            margin: 0;
+        }
+        .coupon-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #333;
+            margin: 5px 0;
+        }
+        .coupon-expiry {
+            font-size: 0.875rem;
+            color: #777;
+            margin: 0;
+        }
+        .coupon-cta {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+        .coupon-cta .btn-custom {
+            border: 1px solid #007bff;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 0.875rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            cursor: pointer;
+            background-color: white;
+            color: #007bff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-custom:hover {
+            background-color: #007bff;
+            color: white;
+            border: 1px solid transparent;
+            transform: scale(1.05);
+        }
+        .wishlist-icon {
+            font-size: 1.5rem;
+            color: #6c757d;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        .wishlist-icon.active {
+            color: #ff3e6c;
+        }
+        .coupon-code {
+            display: none;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #28a745;
+            margin-top: 10px;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .popup.show {
+            display: block;
+            opacity: 1;
+        }
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translate(-50%, -40%);
+        }
+        .popup.show .popup-content {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+        .popup-content img {
+            max-width: 100px;
+            margin-bottom: 20px;
+            border-radius: 50%;
+        }
+        .close-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.875rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        .close-btn:hover {
+            background-color: #0056b3;
+        }
+        .popup-details {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        /* footer styles */
+        footer {
+                    background-color: #004080;
+                    color: white;
+                    text-align: center;
+                    padding: 20px 0;
+                    position: relative;
+                    bottom: 0;
+                    width: 100%;
+                }
+
+                .footer-content {
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+                    flex-wrap: wrap;
+                }
+
+                .footer-section {
+                    width: 45%;
+                    margin-bottom: 20px;
+                }
+
+                .footer-section h4 {
+                    font-size: 20px;
+                    margin-bottom: 15px;
+                }
+
+                .footer-section ul {
+                    list-style: none;
+                    padding: 0;
+                }
+
+                .footer-section ul li {
+                    margin-bottom: 10px;
+                }
+                .footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer p {
+            margin-bottom: 5px;
+        }
+
+        .footer h4 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .footer ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 18px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #007bff;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Header Container -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/home}">CouponHub</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/home}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/displayProfile}" sec:authorize="isAuthenticated()">
+                        <i class="bi bi-person-circle"></i> Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/contact}">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/login}" sec:authorize="isAnonymous()">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/register}" sec:authorize="isAnonymous()">Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container coupon-container">
+    <div class="header">
+        <h1>Coupons</h1>
+        <p>Find the best deals and discounts</p>
+    </div>
+    <div class="row">
+        <li class="alert alert-danger" role="alert" th:if="${!#strings.isEmpty(errorMessge)}"
+            th:text="${errorMessge}"></li>
+        <li class="alert alert-success" role="alert" th:if="${!#strings.isEmpty(successMessage)}"
+            th:text="${successMessage}"></li>
+        <!-- Coupon Card Section -->
+        <div class="col-md-4" th:each="coupon : ${coupons}">
+            <div class="coupon-card" data-coupon-id="[[${coupon.couponId}]]">
+                <div class="coupon-card-main">
+                    <img th:if="${coupon.brands != null}" th:src="${coupon.brands.brandLogo}" alt="Brand Logo">
+                    <div class="coupon-type-text">
+                        <p class="coupon-type" th:text="${coupon.couponType}"></p>
+<!--                        <h3 class="coupon-title" th:if="${coupon.description != null}" th:text="${coupon.description}"></h3>-->
+                        <p class="coupon-expiry" th:if="${coupon.expiryDate != null}" th:text="'Expires: ' + ${coupon.expiryDate}"></p>
+                    </div>
+                </div>
+                <div class="coupon-cta">
+                    <button class="btn-custom"
+                            th:attr="data-description=${coupon.description}, data-expiry=${coupon.expiryDate}, data-coupon-id=${coupon.couponId}"
+                            onclick="showCouponDetails(this)">View Coupon</button>
+                    <button class="btn-custom"
+                            th:attr="data-coupon-id=${coupon.couponId}, data-code=${coupon.code == null ? null : coupon.code}, shop-now=${coupon.shopNow == null ? null : coupon.shopNow}"
+                            onclick="openUseCouponModal(this)">Use Coupon</button>
+                    <form th:action="@{/submitWishlistCoupon}" method="post" style="display: inline;">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                        <input type="hidden" name="couponId" th:value="${coupon.couponId}" />
+                        <button type="submit" class="btn-custom wishlist-button">Add to Wishlist</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="popup" id="popup">
+    <div class="popup-content">
+<!--        <img th:src="${brand.brandLogo}" alt="Coupon Image">-->
+        <p class="popup-details" id="popup-details">Coupon details go here</p>
+        <button class="close-btn" onclick="closePopup('popup')">Close</button>
+    </div>
+</div>
+
+<div class="popup" id="popup1">
+    <div class="popup-content">
+        <form id="useCouponForm" th:action="@{/submitUsedCoupon}" method="post">
+            <input type="hidden" id="couponId" name="couponId" value="">
+            <!-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> -->
+            <p id="popup-coupon-warning" class="popup-coupon-warning">Coupon usage warning details go here</p>
+            <button type="submit" id="useCouponButton" class="btn-custom">Use Coupon</button>
+            <button type="submit" id="shopNowButton" class="btn-custom">Shop Now</button>
+        </form>
+    </div>
+</div>
+
+
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Company Name</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit.</p>
+            </div>
+            <div class="col-md-4">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a th:href="@{/home}">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#con">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h4>Contact Info</h4>
+                <p><strong>Address:</strong> 123 Street, City, Country</p>
+                <p><strong>Email:</strong> info@example.com</p>
+                <p><strong>Phone:</strong> +123-456-7890</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function showCouponDetails(button) {
+        var description = button.getAttribute('data-description');
+        var expiry = button.getAttribute('data-expiry');
+        var detailsText = 'Get ' + description + '. Hurry, offer valid till ' + expiry + '. Use the code at checkout.';
+        document.getElementById('popup-details').textContent = detailsText;
+        document.getElementById('popup').classList.add('show');
+    }
+
+    function openUseCouponModal(button) {
+        var couponId = button.getAttribute('data-coupon-id');
+        var shopNow = button.getAttribute('shop-now');
+        var code = button.getAttribute('data-code'); // Assuming you have a data attribute for the coupon code
+
+        document.getElementById('couponId').value = couponId;
+
+        // Show or hide the buttons based on the presence of coupon code and shopNow URL
+        var useCouponButton = document.getElementById('useCouponButton');
+        var shopNowButton = document.getElementById('shopNowButton');
+
+        if (code && code != null) {
+            useCouponButton.style.display = 'inline-block';
+        } else {
+            useCouponButton.style.display = 'none';
+        }
+
+        if (shopNow && shopNow !== null) {
+            shopNowButton.style.display = 'inline-block';
+        } else {
+            shopNowButton.style.display = 'none';
+        }
+
+        document.getElementById('popup-coupon-warning').textContent = 'Coupon warnings: ';
+        document.getElementById('popup1').classList.add('show');
+    }
+
+
+    function closePopup(id) {
+        document.getElementById(id).classList.remove('show');
+    }
+
+    $(document).ready(function () {
+        $('.wishlist-icon').on('click', function () {
+            $(this).toggleClass('active');
+        });
+    });
+
+</script>
+</body>
+</html>

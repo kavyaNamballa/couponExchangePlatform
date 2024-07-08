@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Online Shopping Coupons</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        .navbar {
+                background-color: #333; /* Darker background with better contrast */
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Add border-bottom */
+                padding: 10px 20px; /* Add padding */
+            }
+
+            .navbar-brand {
+                color: white !important;
+                font-family: 'Georgia', serif;
+                font-size: 30px;
+                font-weight: bold;
+            }
+
+            .navbar-nav .nav-link {
+                color: white !important; /* Ensure links are white */
+                font-family: 'Arial', sans-serif;
+                font-size: 18px;
+                padding: 10px 15px;
+                margin: 0 10px; /* Add space between links */
+                transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+            }
+
+            .navbar-nav .nav-link:hover {
+                color: #004080 !important; /* Change to dark blue on hover */
+                background-color: #ffffff !important; /* White background on hover */
+                border-radius: 5px; /* Rounded corners */
+            }
+
+            .navbar-toggler-icon {
+                color: white !important; /* Ensure the toggler icon is visible */
+            }
+
+
+        /* Styling for the profile page container */
+                .profile-container {
+                    background-color: #f2f2f2;
+                    padding-top: 80px;
+                    padding-bottom: 50px;
+                }
+
+         /* Basic styling for the body */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            background-image: url('https://png.pngtree.com/thumb_back/fh260/back_our/20190625/ourmid/pngtree-simple-small-fresh-watercolor-company-profile-ppt-background-image_260406.jpg');/* Light blue background */
+
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Background for profile section */
+        .profile-background {
+            background-color: #ffffff; /* White background */
+            /* Ensure the image covers the entire container */
+            background-position: center; /* Center the image */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 600px;
+            margin: auto;
+            margin-top: 40px;
+        }
+
+        .profile-background:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .title-main {
+            text-align: center;
+            color: #333;
+        }
+
+        .title-style {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #5d5c61;
+            font-family: 'Georgia', serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .footer-title-29 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+
+        .input-grids {
+            margin-bottom: 2rem;
+        }
+
+        .control-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .contact-input {
+            width: 100%;
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 15px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-input:focus {
+            border-color: #5d5c61;
+            box-shadow: 0 0 5px rgba(93, 92, 97, 0.2);
+            outline: none;
+        }
+
+        /* Styling for the button */
+        .btn-style {
+            background-color: #5d5c61;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-style:hover {
+            background-color: #3e3e42;
+            transform: translateY(-3px);
+        }
+
+        .new-user {
+            margin-top: 1rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .new-user a {
+            color: #5d5c61;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .new-user a:hover {
+            color: #3e3e42;
+        }
+
+
+
+
+
+        /* footer styles */
+footer {
+                    background-color: #004080;
+                    color: white;
+                    text-align: center;
+                    padding: 20px 0;
+                    position: relative;
+                    bottom: 0;
+                    width: 100%;
+                }
+
+                .footer-content {
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+                    flex-wrap: wrap;
+                }
+
+                .footer-section {
+                    width: 45%;
+                    margin-bottom: 20px;
+                }
+
+                .footer-section h4 {
+                    font-size: 20px;
+                    margin-bottom: 15px;
+                }
+
+                .footer-section ul {
+                    list-style: none;
+                    padding: 0;
+                }
+
+                .footer-section ul li {
+                    margin-bottom: 10px;
+                }
+                .footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer p {
+            margin-bottom: 5px;
+        }
+
+        .footer h4 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .footer ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 18px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #007bff;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Header Container -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/home}">CouponHub</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/home}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/displayProfile}" sec:authorize="isAuthenticated()">
+                        <i class="bi bi-person-circle"></i> Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/contact}">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/login}" sec:authorize="isAnonymous()">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/register}" sec:authorize="isAnonymous()">Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- profile block -->
+<section id="profile" class="profile-container">
+    <div class="profile-background">
+        <div class="title-main mb-4">
+            <h3 class="title-style">My Profile</h3>
+        </div>
+        <ul>
+            <li class="alert alert-danger" role="alert" th:each="error : ${#fields.errors('profile.*')}" th:text="${error}" />
+        </ul>
+        <form th:action="@{/updateProfile}" method="post" class="signin-form" th:object="${profile}">
+            <div class="mb-4">
+                <h5 class="footer-title-29">Personal Details</h5>
+            </div>
+            <div class="input-grids">
+                <label class="control-label" for="name">Name:</label>
+                <input type="text" th:field="*{name}" id="name" class="contact-input" />
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label class="control-label" for="mobileNumber">Mobile Number:</label>
+                        <input type="text" th:field="*{mobileNumber}" id="mobileNumber"
+                               class="contact-input" />
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label" for="email">Email:</label>
+                        <input type="text" th:field="*{email}" id="email"
+                               class="contact-input" />
+                    </div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <h5 class="footer-title-29">Address Details</h5>
+            </div>
+            <div class="input-grids">
+                <label class="control-label" for="address1">Address Line 1:</label>
+                <input type="text" th:field="*{address1}" id="address1" class="contact-input" />
+                <label for="address2">Address Line 2:</label>
+                <input type="text" th:field="*{address2}" id="address2" class="contact-input" />
+                <label class="control-label" for="city">City:</label>
+                <input type="text" th:field="*{city}" id="city" class="contact-input" />
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label class="control-label" for="state">State:</label>
+                        <input type="text" th:field="*{state}" id="state"
+                               class="contact-input" />
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label" for="zipCode">Zip Code:</label>
+                        <input type="text" th:field="*{zipCode}" id="zipCode"
+                               class="contact-input" />
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-style">Update</button>
+                <a th:href="@{/home}" class="new-user">
+                    <button type="button" class="btn btn-style">Back</button>
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
+<!-- //profile block -->
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Company Name</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit.</p>
+            </div>
+            <div class="col-md-4">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a th:href="@{/home}">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#con">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h4>Contact Info</h4>
+                <p><strong>Address:</strong> 123 Street, City, Country</p>
+                <p><strong>Email:</strong> info@example.com</p>
+                <p><strong>Phone:</strong> +123-456-7890</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
