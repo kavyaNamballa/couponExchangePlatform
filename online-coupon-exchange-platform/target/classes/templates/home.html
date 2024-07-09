@@ -106,40 +106,56 @@
                 }
                 .store-container{
                     width: 80%;
-                    background-color: lightgrey;
+                    background-color: white;
                     border-radius: 40px;
                     margin: auto;
-                }
-                /* Styling for the company icons */
-                .company-icons {
-                    display: flex;
-                    justify-content: space-around;
-                    align-items: center;
-                    flex-wrap: wrap;
-                    padding: 20px 20px;
+                    text-align: center;
+
                 }
 
-                .company-icon {
-                    width: 130px;
-                    height: 130px;
-                    background-color: rgba(240, 217, 217, 0.062);
-                    border-radius: 10%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    box-shadow: 0 4px 8px rgba(114, 106, 106, 0.1);
-                    transition: transform 0.3s ease;
-                    margin: 10px;
-                }
+        .top-stores-heading {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .company-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
 
-                .company-icon img {
-                    max-width: 85%;
-                    max-height: 85%;
-                }
+        .company-icon {
+            width: 150px;
+            height: 150px;
+            background-color: rgba(240, 217, 217, 0.062);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+            transition: transform 0.3s ease;
+            margin: 10px;
+        }
 
-                .company-icon:hover {
-                    transform: scale(1.1);
-                }
+        .company-icon img {
+            max-width: 85%;
+            max-height: 85%;
+            border-radius: 10px;
+        }
+
+        .company-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .top-stores-heading {
+            color: #002147;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+
 
                 /* Styling for the carousel images */
                 .carousel-img {
@@ -369,6 +385,12 @@
         .footer-links a:hover {
             color: #007bff;
         }
+        /* .extra-padding-top{
+            padding-top: 27px;
+            justify-content: center;
+            align-self: center;
+            align-items: center;
+        } */
 
     </style>
 </head>
@@ -421,8 +443,7 @@
         <div class="welcome-text">
             <h3 class="welcome-title">Welcome to Coupon Hub!</h3>
             <p class="welcome-paragraph">
-                At Coupon Exchange, we believe in the power of saving and sharing. Our platform is dedicated to helping you make the most of your unused coupons by allowing you to share them with others who can benefit from them. We aim to create a community where everyone can save money and enjoy great deals.
-            </p>
+                Your premier destination for the latest and greatest online shopping deals. Our platform is dedicated to helping you save big on your favorite products and services by providing an extensive collection of the best coupons and discounts from top retailers. With an easy-to-use interface and a commitment to up-to-date offers, CouponHub ensures you never miss an opportunity to shop smart and save more. Join our community of savvy shoppers and start enjoying unbeatable savings today! </p>
         </div>
         <div class="welcome-image">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFv19GqOZvkCV5tROAEk8bOxuKtTSO_RF3EA&s" alt="About Us Image">
@@ -461,44 +482,64 @@
         <h2 class="top-stores-heading">Top Stores</h2>
         <div class="company-icons">
             <div class="company-icon">
-                <a th:href="@{/displayCoupons(brandId=4)}">
-                    <img src="https://i.pinimg.com/564x/13/49/0c/13490c062140a1a5eee5c74de39255dd.jpg" alt="Company 1"></a>
+                <a href="/displayCoupons?brandId=4">
+                    <img src="https://i.pinimg.com/564x/13/49/0c/13490c062140a1a5eee5c74de39255dd.jpg" alt="Company 1">
+                </a>
             </div>
             <div class="company-icon">
-                <a th:href="@{/displayCoupons(brandId=1)}">
-                    <img src="https://i.pinimg.com/564x/5a/62/70/5a62706bc5603694b1bd08acc40d3096.jpg" alt="Company 2"></a>
+                <a href="/displayCoupons?brandId=1">
+                    <img src="https://i.pinimg.com/564x/5a/62/70/5a62706bc5603694b1bd08acc40d3096.jpg" alt="Company 2" class="extra-padding-top">
+                </a>
             </div>
             <div class="company-icon">
-                <a th:href="@{/displayCoupons(brandId=4)}">
-                    <img src="https://i.pinimg.com/564x/b3/8a/a1/b38aa1b21050b0e769a97eb751d12829.jpg" alt="Company 3"></a>
+                <a href="/displayCoupons?brandId=3">
+                    <img src="https://i.pinimg.com/564x/b3/8a/a1/b38aa1b21050b0e769a97eb751d12829.jpg" alt="Company 3">
+                </a>
             </div>
             <div class="company-icon">
-                <a th:href="@{/displayCoupons(brandId=2)}">
-                    <img src="https://i.pinimg.com/736x/b9/31/28/b931287eff4265de219421b7837ff9e9.jpg" alt="Company 4"></a>
+                <a href="/displayCoupons?brandId=2">
+                    <img src="https://i.pinimg.com/736x/b9/31/28/b931287eff4265de219421b7837ff9e9.jpg" alt="Company 4">
+                </a>
             </div>
             <div class="company-icon">
-                <a th:href="@{/displayCoupons(brandId=5)}">
-                    <img src="https://i.pinimg.com/736x/5d/b3/6a/5db36abf85ec25861691377718588d9b.jpg" alt="Company 5"></a>
+                <a href="/displayCoupons?brandId=5">
+                    <img src="https://i.pinimg.com/736x/5d/b3/6a/5db36abf85ec25861691377718588d9b.jpg" alt="Company 5">
+                </a>
             </div>
             <div class="company-icon">
-                <a th:href="@{/displayCoupons(brandId=4)}">
-                    <img src="https://i.pinimg.com/564x/b1/5d/fc/b15dfc9f11992f147703c4b1ff45ea8a.jpg" alt="Company 6"></a>
+                <a href="/displayCoupons?brandId=7">
+                    <img src="https://i.pinimg.com/564x/b1/5d/fc/b15dfc9f11992f147703c4b1ff45ea8a.jpg" alt="Company 6">
+                </a>
             </div>
             <div class="company-icon">
-                <a th:href="@{/displayCoupons(brandId=4)}">
-                    <img src="https://i.pinimg.com/564x/f3/b7/ac/f3b7acbc81e268b28ffc2371c555c6d4.jpg" alt="Company 7"></a>
+                <a href="/displayCoupons?brandId=8">
+                    <img src="https://i.pinimg.com/564x/f3/b7/ac/f3b7acbc81e268b28ffc2371c555c6d4.jpg" alt="Company 7">
+                </a>
             </div>
             <div class="company-icon">
-                <a th:href="@{/displayCoupons(brandId=4)}">
-                    <img src="https://i.pinimg.com/564x/d2/3c/bf/d23cbf926d0672238d35ff3486a8c7a3.jpg" alt="Company 8"></a>
+                <a href="/displayCoupons?brandId=9">
+                    <img src="https://i.pinimg.com/564x/d2/3c/bf/d23cbf926d0672238d35ff3486a8c7a3.jpg" alt="Company 8">
+                </a>
             </div>
             <div class="company-icon">
-                <a th:href="@{/displayCoupons(brandId=4)}">
-                    <img src="https://i.pinimg.com/564x/2e/ba/5b/2eba5b05e132ff093eb4e64c77f1c55a.jpg" alt="Company 9"></a>
+                <a href="/displayCoupons?brandId=10">
+                    <img src="https://i.pinimg.com/564x/2e/ba/5b/2eba5b05e132ff093eb4e64c77f1c55a.jpg" alt="Company 9" class="extra-padding-top">
+                </a>
             </div>
             <div class="company-icon">
-                <a th:href="@{/displayCoupons(brandId=4)}">
-                    <img src="https://cdn.grabon.in/gograbon/images/merchant/1620803829927/makemytrip-logo.jpg" alt="Company 10"></a>
+                <a href="/displayCoupons?brandId=11">
+                    <img src="https://images.thedermaco.com/TheDermaCoLogo2-min.png" alt="Company 9" class="extra-padding-top">
+                </a>
+            </div>
+            <div class="company-icon">
+                <a href="/displayCoupons?brandId=6">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Boat_Logo.webp" alt="Company 9" class="extra-padding-top">
+                </a>
+            </div>
+            <div class="company-icon">
+                <a href="/displayCoupons?brandId=12">
+                    <img src="https://cdn.grabon.in/gograbon/images/merchant/1620803829927/makemytrip-logo.jpg" alt="Company 10">
+                </a>
             </div>
         </div>
     </div>
@@ -509,7 +550,7 @@
         <!-- Image Section -->
 
         <!-- About Us Content -->
-
+        <h2 class="top-stores-heading">About Us</h2>
         <div class="about-us-section">
             <h3 class="about-us-title">Our Mission</h3>
             <p class="about-us-paragraph">

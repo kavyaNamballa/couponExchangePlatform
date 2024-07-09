@@ -48,8 +48,17 @@
                     background-color: #f2f2f2;
                     padding-top: 80px;
                     padding-bottom: 50px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
                 }
-
+            .coupon-card-container{
+            display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+            }
 
         body {
             background-color: #f8f9fa;
@@ -102,6 +111,11 @@
             margin-bottom: 30px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out, border-color 0.3s;
+            max-width: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
         }
         .coupon-card:hover {
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -140,6 +154,7 @@
         }
         .coupon-cta {
             display: flex;
+<!--            flex-direction: column;-->
             align-items: center;
             margin-top: 15px;
         }
@@ -162,6 +177,12 @@
             color: white;
             border: 1px solid transparent;
             transform: scale(1.05);
+        }
+        .wishlist-button{
+            border: 0;
+            border-color: white;
+            background-color: transparent;
+            outline: none;
         }
         .wishlist-icon {
             font-size: 1.5rem;
@@ -241,6 +262,14 @@
             margin-bottom: 15px;
         }
 
+        .wishlist-button .wishlist-icon {
+            color: gray;
+        }
+
+        .wishlist-button.active .wishlist-icon {
+            color: red;
+        }
+
         /* footer styles */
         footer {
                     background-color: #004080;
@@ -314,6 +343,26 @@
         .footer-links a:hover {
             color: #007bff;
         }
+        .back-button {
+            background: linear-gradient(45deg, #9c27b0, #7b1fa2);
+            color: #ffffff;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(156, 39, 176, 0.4);
+            text-decoration:none;
+            color:white;
+        }
 
     </style>
 </head>
@@ -363,20 +412,20 @@
         <h1>Coupons</h1>
         <p>Find the best deals and discounts</p>
     </div>
-    <div class="row">
+    <div class="coupon-card-container" >
         <li class="alert alert-danger" role="alert" th:if="${!#strings.isEmpty(errorMessge)}"
             th:text="${errorMessge}"></li>
         <li class="alert alert-success" role="alert" th:if="${!#strings.isEmpty(successMessage)}"
             th:text="${successMessage}"></li>
         <!-- Coupon Card Section -->
-        <div class="col-md-4" th:each="coupon : ${coupons}">
+        <div class=" " th:each="coupon : ${coupons}">
             <div class="coupon-card" data-coupon-id="[[${coupon.couponId}]]">
                 <div class="coupon-card-main">
                     <img th:if="${coupon.brands != null}" th:src="${coupon.brands.brandLogo}" alt="Brand Logo">
                     <div class="coupon-type-text">
-                        <p class="coupon-type" th:text="${coupon.couponType}"></p>
-<!--                        <h3 class="coupon-title" th:if="${coupon.description != null}" th:text="${coupon.description}"></h3>-->
-                        <p class="coupon-expiry" th:if="${coupon.expiryDate != null}" th:text="'Expires: ' + ${coupon.expiryDate}"></p>
+                        <p class="coupon-type" th:text="${coupon.couponType}">utfdyt</p>
+                        <!--                        <h3 class="coupon-title" th:if="${coupon.description != null}" th:text="${coupon.description}"></h3>-->
+                        <p class="coupon-expiry" th:if="${coupon.expiryDate != null}" th:text="'Expires: ' + ${coupon.expiryDate}">hfxdyrdyr</p>
                     </div>
                 </div>
                 <div class="coupon-cta">
@@ -389,7 +438,12 @@
                     <form th:action="@{/submitWishlistCoupon}" method="post" style="display: inline;">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <input type="hidden" name="couponId" th:value="${coupon.couponId}" />
-                        <button type="submit" class="btn-custom wishlist-button">Add to Wishlist</button>
+                        <button type="submit" class="wishlist-button"
+                                th:classappend="${coupon.wishlistId != null} ? 'active' : ''"
+                                th:attr="onclick=${coupon.wishlistId != null} ? 'toggleWishlist(this)' : ''">
+                            <i class="fas fa-heart wishlist-icon"></i>
+                        </button>
+
                     </form>
                 </div>
             </div>
@@ -399,7 +453,7 @@
 
 <div class="popup" id="popup">
     <div class="popup-content">
-<!--        <img th:src="${brand.brandLogo}" alt="Coupon Image">-->
+        <!--        <img th:src="${brand.brandLogo}" alt="Coupon Image">-->
         <p class="popup-details" id="popup-details">Coupon details go here</p>
         <button class="close-btn" onclick="closePopup('popup')">Close</button>
     </div>
@@ -415,6 +469,9 @@
             <button type="submit" id="shopNowButton" class="btn-custom">Shop Now</button>
         </form>
     </div>
+    <a th:href="@{/home}" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
 </div>
 
 

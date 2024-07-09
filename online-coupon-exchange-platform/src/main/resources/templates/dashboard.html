@@ -320,11 +320,11 @@
         <a th:href="@{/displayPostedCoupons}" class="button posted-button">
             <i class="fas fa-bullhorn"></i> Posted Coupons
         </a>
-        <a th:href="@{/contact}" class="button contact-button">
-            <i class="fas fa-envelope"></i> Contact
+        <a th:href="@{/displayMessages}" class="button contact-button" sec:authorize="hasRole('ROLE_ADMIN')">
+            <i class="fas fa-envelope"></i> Messages
         </a>
     </div>
-    <a href="javascript:history.back()" class="back-button">
+    <a th:href="@{/home}" class="back-button">
         <i class="fas fa-arrow-left"></i> Back
     </a>
 </div>

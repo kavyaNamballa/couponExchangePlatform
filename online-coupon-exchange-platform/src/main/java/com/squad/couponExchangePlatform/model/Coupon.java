@@ -53,6 +53,10 @@ public class Coupon {
     @JoinColumn(name = "used_id", referencedColumnName = "personId", nullable = true)
     private Person usedId;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, targetEntity = Person.class)
+    @JoinColumn(name = "wishlistId", referencedColumnName = "personId", nullable = true)
+    private Person wishlistId;
+
     @ManyToMany(mappedBy = "coupons", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Person> person = new HashSet<>();
 

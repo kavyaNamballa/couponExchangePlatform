@@ -67,11 +67,13 @@ CREATE TABLE IF NOT EXISTS `coupon` (
     `person_id` int NOT NULL,
     `brand_id` int NOT NULL,
     `used_id` int DEFAULT NULL,
+    `wishlist_id` int DEFAULT NULL,
     `shop_now` varchar(500) DEFAULT NULL,
     PRIMARY KEY (`coupon_id`),
     FOREIGN KEY (person_id) REFERENCES person(person_id),
     FOREIGN KEY (brand_id) REFERENCES brands(brand_id),
-    FOREIGN KEY (used_id) REFERENCES person(person_id)
+    FOREIGN KEY (used_id) REFERENCES person(person_id),
+    FOREIGN KEY (wishlist_id) REFERENCES person(person_id)
 );
 
 CREATE TABLE IF NOT EXISTS `contact_msg` (

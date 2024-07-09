@@ -102,6 +102,11 @@
             margin-bottom: 30px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out, border-color 0.3s;
+            min-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
         }
         .coupon-card:hover {
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -363,13 +368,13 @@
         <h1>Coupons</h1>
         <p>Find the best deals and discounts</p>
     </div>
-    <div class="row">
+    <div  >
         <li class="alert alert-danger" role="alert" th:if="${!#strings.isEmpty(errorMessge)}"
             th:text="${errorMessge}"></li>
         <li class="alert alert-success" role="alert" th:if="${!#strings.isEmpty(successMessage)}"
             th:text="${successMessage}"></li>
         <!-- Coupon Card Section -->
-        <div class="col-md-4" th:each="coupon : ${coupons}">
+        <div   th:each="coupon : ${coupons}">
             <div class="coupon-card" data-coupon-id="[[${coupon.couponId}]]">
                 <div class="coupon-card-main">
                     <img th:if="${coupon.brands != null}" th:src="${coupon.brands.brandLogo}" alt="Brand Logo">

@@ -7,10 +7,16 @@ INSERT INTO `roles` (`role_name`,`created_at`, `created_by`)
 INSERT INTO `brands` VALUES
 (1,'amazon',"https://i.pinimg.com/564x/5a/62/70/5a62706bc5603694b1bd08acc40d3096.jpg"),
 (2,'flipkart',"https://i.pinimg.com/736x/b9/31/28/b931287eff4265de219421b7837ff9e9.jpg"),
-(3,'meesho',"https://i.pinimg.com/564x/5a/62/70/5a62706bc5603694b1bd08acc40d3096.jpg"),
+(3,'swiggy',"https://i.pinimg.com/564x/b3/8a/a1/b38aa1b21050b0e769a97eb751d12829.jpg"),
 (4,'myntra',"https://i.pinimg.com/564x/13/49/0c/13490c062140a1a5eee5c74de39255dd.jpg"),
 (5,'ajio',"https://i.pinimg.com/736x/5d/b3/6a/5db36abf85ec25861691377718588d9b.jpg"),
-(6,'boat',"https://i.pinimg.com/736x/08/16/15/081615c30f30318974ce916da17b88e3.jpg");
+(6,'boat',"https://i.pinimg.com/736x/08/16/15/081615c30f30318974ce916da17b88e3.jpg"),
+(7,'phonepe',"https://i.pinimg.com/564x/b1/5d/fc/b15dfc9f11992f147703c4b1ff45ea8a.jpg"),
+(8,'uber',"https://i.pinimg.com/564x/f3/b7/ac/f3b7acbc81e268b28ffc2371c555c6d4.jpg"),
+(9,'paytm',"https://i.pinimg.com/564x/d2/3c/bf/d23cbf926d0672238d35ff3486a8c7a3.jpg"),
+(10,'redbus',"https://i.pinimg.com/564x/2e/ba/5b/2eba5b05e132ff093eb4e64c77f1c55a.jpg"),
+(11,'dermaco',"https://images.thedermaco.com/TheDermaCoLogo2-min.png"),
+(12,'makemytrip',"https://cdn.grabon.in/gograbon/images/merchant/1620803829927/makemytrip-logo.jpg");
 
 INSERT INTO `person` (`name`,`email`,`mobile_number`,`pwd`,`role_id`,`created_at`, `created_by`)
   VALUES ('Admin','squad@gmail.com','7854907303','$2a$10$XhU4UcSxDPb5G0I0fT/CZ.Lfj2VW2fkLkUP5cOEM.xM8EzyUQXaD2', 1 ,CURDATE(),'DBA');
@@ -82,3 +88,18 @@ INSERT INTO coupon (code, coupon_type, discount_value, expiry_date, min_purchase
 ('FLASH500', 'Fixed Amount Discount Coupon', '500/-', '2024-08-31', 0, 'Get flat ₹500 discount on select products. Use coupon code to avail this offer. Valid only on products listed on the landing page.',1,6),
 
 ('SUMMER500', 'Fixed Amount Discount Coupon', '500/-', '2024-08-31', 0, 'Get ₹500 off on select products from various categories like headphones, speakers, soundbars and music equipments. Use coupon code to avail this offer.',1,6);
+
+
+INSERT INTO coupon (code, coupon_type, discount_value,min_purchase_amount, description,person_id,brand_id) VALUES
+('FIRSTBUY', 'Percentage Discount Coupon', '500 Off', 1490, 'Get Upto Extra 30% Off on Orders of ₹1490 & Above (First 2 Purchases).', 1, 5),
+('AGHDFC', 'Percentage Discount Coupon', '50% Off', 2000, 'Get Upto 50% Off + Extra ₹2000 Off Via HDFC Cards (Ajio Gold Members)', 1, 5),
+('PREMIYUM', 'Percentage Discount Coupon', '15% Off Upto ₹2300', 4999, 'Get extra upto 15% off upto ₹2300 on select premium products.', 1, 5),
+('Coupon Activate...', 'Percentage Discount Coupon', '500 Off', 1490, 'Get Upto 80% Across Categories Like Fashion, Home And More.', 1, 1),
+('FLYFK', 'Percentage Discount Coupon', 'Up To 15%', 1490, 'Enjoy Up To 15% Off Domestic & International Flights With Code', 1, 2),
+('FLYBSD', 'Percentage Discount Coupon', '10% off', 1490, 'Save 10% on Hdfc Bank Credit Cards', 1, 2),
+('FLYBDS', 'Percentage Discount Coupon', '16% Off', 1490, 'Take Up to 16% Off with Coupon', 1, 2),
+('MS35Dsjrw', 'Percentage Discount Coupon', '35% off', 10000, 'Save 35% Off using Coupon Code', 1, 2),
+('TAVLOUF36896', 'Percentage Discount Coupon', '20% Off', 999, 'Get Up To 20% Off + Free Delivery With Meesho New User Offer', 1, 3),
+('PBHUMWD64219', 'Percentage Discount Coupon', '65% Off', 20000, "Today's Top Deal: Fashion, Electronics, Home & More Up To 65% Off", 1, 3);
+
+
