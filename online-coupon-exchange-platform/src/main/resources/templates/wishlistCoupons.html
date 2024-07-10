@@ -320,6 +320,27 @@
             color: #007bff;
         }
 
+        .back-button {
+            background: linear-gradient(45deg, #9c27b0, #7b1fa2);
+            color: #ffffff;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(156, 39, 176, 0.4);
+            text-decoration:none;
+            color:white;
+        }
+
     </style>
 </head>
 <body>
@@ -395,6 +416,9 @@
             </div>
         </div>
     </div>
+    <a th:href="@{/dashboard}" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
 </div>
 
 <div class="popup" id="popup">

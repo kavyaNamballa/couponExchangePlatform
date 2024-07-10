@@ -63,6 +63,7 @@
         body {
             background-color: #f8f9fa;
             font-family: 'Arial', sans-serif;
+            height: 100vh;
         }
         .header {
             text-align: center;
@@ -448,7 +449,12 @@
                 </div>
             </div>
         </div>
+
+
     </div>
+    <a th:href="@{/home}" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
 </div>
 
 <div class="popup" id="popup">
@@ -468,10 +474,9 @@
             <button type="submit" id="useCouponButton" class="btn-custom">Use Coupon</button>
             <button type="submit" id="shopNowButton" class="btn-custom">Shop Now</button>
         </form>
+
     </div>
-    <a th:href="@{/home}" class="back-button">
-        <i class="fas fa-arrow-left"></i> Back
-    </a>
+
 </div>
 
 

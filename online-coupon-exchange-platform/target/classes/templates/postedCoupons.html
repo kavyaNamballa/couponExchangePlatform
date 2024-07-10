@@ -359,6 +359,34 @@
             color: #007bff;
         }
 
+        .back-button {
+            background: linear-gradient(45deg, #9c27b0, #7b1fa2);
+            color: #ffffff;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(156, 39, 176, 0.4);
+            text-decoration:none;
+            color:white;
+        }
+        .add-coupon{
+         margin: 20px;
+         self-align: left;
+        }
+        .button-container{
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
@@ -433,8 +461,13 @@
 </div>
 
 <!-- Button to open the form -->
-<button class="btn btn-primary" onclick="openForm()">Add Coupon</button>
 
+<a th:href="@{/dashboard}" class="back-button">
+    <i class="fas fa-arrow-left"></i> Back
+</a>
+<div class="button-container">
+<button class="btn btn-primary add-coupon" onclick="openForm()">Add Coupon</button>
+</div>
 <!-- Popup form for adding a coupon -->
 <div class="popup-form" id="couponForm">
     <form id="addCouponForm" th:action="@{/addCoupon}" method="post" th:object="${coupon}">
@@ -470,7 +503,8 @@
             <label for="brand">Brand:</label>
             <input type="number" class="form-control" id="brand" th:field="*{brands}">
         </div>
-        <button type="submit" class="btn btn-primary">Add Coupon</button>
+
+            <button type="submit" class="btn btn-primary">Add Coupon</button>
         <button type="button" class="close-btn" onclick="closeForm()">Close</button>
     </form>
 </div>
