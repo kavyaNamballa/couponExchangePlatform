@@ -341,6 +341,29 @@
             color:white;
         }
 
+        .wishlist-button{
+            border: 0;
+            border-color: white;
+            background-color: transparent;
+            outline: none;
+        }
+        .wishlist-icon {
+            font-size: 1.5rem;
+            color: #6c757d;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        .wishlist-icon.active {
+            color: #ff3e6c;
+        }
+
+        .wishlist-button .wishlist-icon {
+            color: gray;
+        }
+
+        .wishlist-button.active .wishlist-icon {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -412,6 +435,15 @@
                     <button class="btn-custom"
                             th:attr="data-coupon-id=${coupon.couponId}, data-code=${coupon.code == null ? null : coupon.code}, shop-now=${coupon.shopNow == null ? null : coupon.shopNow}"
                             onclick="openUseCouponModal(this)">Use Coupon</button>
+                    <form th:action="@{/submitWishlistCouponFromWishlist}" method="post" style="display: inline;">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                        <input type="hidden" name="couponId" th:value="${coupon.couponId}" />
+                        <button type="submit" class="wishlist-button"
+                                th:classappend="${coupon.wishlistId != null} ? 'active' : ''"
+                                th:attr="onclick=${coupon.wishlistId != null} ? 'toggleWishlist(this)' : ''">
+                            <i class="fas fa-heart wishlist-icon"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

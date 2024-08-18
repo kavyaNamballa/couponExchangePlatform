@@ -95,8 +95,13 @@ public class CouponController {
 
                 if (couponOpt.isPresent()) {
                     Coupon coupon = couponOpt.get();
-                    coupon.setWishlistId(loggedInPerson);
-                    loggedInPerson.getCoupons().add(coupon);
+                    if(coupon.getWishlistId() == null) {
+                        coupon.setWishlistId(loggedInPerson);
+                        loggedInPerson.getCoupons().add(coupon);
+                    }else{
+                        coupon.setWishlistId(null);
+                        loggedInPerson.getCoupons().remove(coupon);
+                    }
                     personRepository.save(loggedInPerson);
                     model.addAttribute("successMessage", "Coupon added to wishlist successfully!");
                     return "redirect:/displayCoupons?brandId=" + coupon.getBrands().getBrandId();

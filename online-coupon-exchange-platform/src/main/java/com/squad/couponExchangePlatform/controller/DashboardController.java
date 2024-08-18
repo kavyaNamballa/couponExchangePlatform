@@ -125,5 +125,40 @@ public class DashboardController {
         return "redirect:/displayWishlistCoupons";
     }
 
+    @PostMapping("/submitWishlistCouponFromWishlist")
+    public String submitWishlistCoupon(@RequestParam("couponId") int couponId, Authentication authentication, Model model) {
+        log.info("-------entered-----------");
+        try {
+            Person loggedInPerson = personRepository.readByEmail(authentication.getName());
+
+            if (loggedInPerson != null) {
+                Optional<Coupon> couponOpt = couponRepository.findById(couponId);
+
+                if (couponOpt.isPresent()) {
+                    Coupon coupon = couponOpt.get();
+                    if(coupon.getWishlistId() == null) {
+                        coupon.setWishlistId(loggedInPerson);
+                        loggedInPerson.getCoupons().add(coupon);
+                    }else{
+                        coupon.setWishlistId(null);
+                        loggedInPerson.getCoupons().remove(coupon);
+                    }
+                    personRepository.save(loggedInPerson);
+                    model.addAttribute("successMessage", "Coupon added to wishlist successfully!");
+                    return "redirect:/displayWishlistCoupons";
+                } else {
+                    model.addAttribute("errorMessage", "Coupon not found");
+                }
+            } else {
+                model.addAttribute("errorMessage", "User not found");
+            }
+        } catch (Exception e) {
+            log.error("Error adding coupon to wishlist", e);
+            model.addAttribute("errorMessage", "An error occurred while adding the coupon to wishlist");
+        }
+
+        return "redirect:/displayWishlistCoupons";
+    }
+
 
 }

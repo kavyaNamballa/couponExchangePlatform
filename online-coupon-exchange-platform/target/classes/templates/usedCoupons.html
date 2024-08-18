@@ -390,7 +390,7 @@
         <h1>Coupons</h1>
         <p>Find the best deals and discounts</p>
     </div>
-    <div  >
+    <div>
         <li class="alert alert-danger" role="alert" th:if="${!#strings.isEmpty(errorMessge)}"
             th:text="${errorMessge}"></li>
         <li class="alert alert-success" role="alert" th:if="${!#strings.isEmpty(successMessage)}"
@@ -404,11 +404,12 @@
                         <p class="coupon-type" th:text="${coupon.couponType}"></p>
                         <!--                        <h3 class="coupon-title" th:if="${coupon.description != null}" th:text="${coupon.description}"></h3>-->
                         <p class="coupon-expiry" th:if="${coupon.expiryDate != null}" th:text="'Expires: ' + ${coupon.expiryDate}"></p>
+                        <p class="coupon-expiry" th:if="${coupon.code != null}" th:text="'Code: ' + ${coupon.code}"></p>
                     </div>
                 </div>
                 <div class="coupon-cta">
                     <button class="btn-custom"
-                            th:attr="data-description=${coupon.description}, data-expiry=${coupon.expiryDate}, data-coupon-id=${coupon.couponId}"
+                            th:attr="data-description=${coupon.description}, data-expiry=${coupon.expiryDate}, data-coupon-id=${coupon.couponId} ,coupon-code=${coupon.code}"
                             onclick="showCouponDetails(this)">View Coupon</button>
 
                 </div>
@@ -469,7 +470,8 @@
     function showCouponDetails(button) {
         var description = button.getAttribute('data-description');
         var expiry = button.getAttribute('data-expiry');
-        var detailsText = 'Get ' + description + '. Hurry, offer valid till ' + expiry + '. Use the code at checkout.';
+        var code = button.getAttribute('coupon-code');
+        var detailsText = 'Get ' + description + '. Hurry, offer valid till ' + expiry + '. Use the code at checkout.' + code;
         document.getElementById('popup-details').textContent = detailsText;
         document.getElementById('popup').classList.add('show');
     }
